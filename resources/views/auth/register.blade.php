@@ -1,3 +1,10 @@
+@extends('layouts.auth')
+
+@section('tittle')
+    Crear Cuenta
+@endsection
+
+@section('auth-contents')
 <form class="mt-14 space-y-5" novalidate>
     <div class="space-y-2">
         <label class="font-bold text-2xl block" for="name">Nombre</label>
@@ -50,3 +57,4 @@
         value='Registrarme'
         class="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-bold  text-xl cursor-pointer" />
 </form>
+@endsection
