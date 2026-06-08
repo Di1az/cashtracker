@@ -16,6 +16,7 @@
             class="w-full border border-gray-300 p-3 rounded-lg"
             name="name" 
         />
+
     </div>
 
     <div class="space-y-2">
