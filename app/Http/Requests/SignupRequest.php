@@ -25,11 +25,11 @@ class SignupRequest extends FormRequest
             'email.email' => 'Email no válido',
             'email.unique' => 'Este correo ya esta registrado',
             'password.required' => 'El Password es obligatiorio',
-            'password.confirmed' => 'Las Contrasaeñas no coinciden',
+            'password.confirmed' => 'Las Contraseñas no coinciden',
             'password.min' => 'La Contraseña debe contener al menos :min caractéres',
             'password.letters' => 'La Contraseña debe tener al menos 1 letra',
             'password.mixed' => 'La Contraseña debe tener al menos una letra mayúscula y una letra minúscula',
-            'password.symbols' => 'LaContraseña debe tener al menos una caractér especial',
+            'password.symbols' => 'La Contraseña debe tener al menos una caractér especial',
             'password.numbers' => 'La Contraseña debe tener al menos un número',
             'password.uncompromised' => 'La Contraseña ha aparecido en filtraciones de datos. Elige un más segura'
         ];

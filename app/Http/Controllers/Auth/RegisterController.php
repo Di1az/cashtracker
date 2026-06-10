@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -21,7 +23,16 @@ class RegisterController extends Controller
         $data = $request->validated();
 
         //insert into usuarios... 
-        User::create($data);
+        $user = User::create($data);
+
+        //Mandamos a llamar al evento
+        event(new Registered($user));
+
+        //Autenticamos el usuario, esto creará un cookie que la recuperamos en la ruta
+        Auth::login($user);
+
+        //Redirigimos al usuario
+        return redirect()->route('verification.notice');
 
     }
 
