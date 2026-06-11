@@ -5,7 +5,14 @@
 @endsection
 
 @section('auth-contents')
-<form class="mt-14 space-y-5" novalidate>
+
+@if(session('error'))
+    <p class="my-10 text-center border border-red-400 bg-red-100 py-3 text-red-700 text-sm">
+        {{ session('error') }}
+    </p>
+@endif
+
+<form method="POST" class="mt-14 space-y-5" action="{{ route('login.store') }}" novalidate>
     <div class="flex flex-col gap-2">
         <label class="font-bold text-2xl" for="email">Email</label>
 
@@ -15,8 +22,13 @@
             placeholder="Email de Registro"
             class="w-full border border-gray-300 p-3 rounded-lg"
             name="email"
-            tabindex="1" />
+            tabindex="1" 
+            value="{{ old('email') }}"/>
     </div>
+
+    @error('email')
+            <p class="text-red-600">{{ $message }}</p>
+    @enderror
 
     <div class="flex flex-col gap-2">
         <div class="flex  items-center justify-between">
@@ -30,6 +42,11 @@
             name="password"
             tabindex="2" />
     </div>
+
+    @error('password')
+            <p class="text-red-600">{{ $message }}</p>
+    @enderror
+
     <input
         type="submit"
         value='Iniciar Sesión'
