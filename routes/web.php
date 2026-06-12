@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +27,13 @@ Route::get('/email/verify', function() {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 //El middleware auth revisa si el usuario esta autenticado, si está, le muestra la información, sino, lo lleva al login
+
+Route::post('/email/verification-notification', function(Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('success', 'Se ha enviado el correo de verificación');
+})->middleware(['auth', 'throttle:2,1'])->name('verification.name');
+//El middleware throttle actúa como rate limit, 2 es la cantidad de peticiones que puedo enviar, 1 son los minutos 
 
 Route::get('/dashboard', function() {
     return view('dashboard');
