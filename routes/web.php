@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,8 @@ Route::post('/auth/login', [LoginController::class, 'store'])->name('login.store
 
 Route::get('/auth/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/auth/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::post('auth/logout', [LogoutController::class, 'store'])->name('logout.store');
 
 Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $request) {
     $request->fulfill();
@@ -35,7 +39,6 @@ Route::post('/email/verification-notification', function(Request $request) {
 })->middleware(['auth', 'throttle:2,1'])->name('verification.name');
 //El middleware throttle actúa como rate limit, 2 es la cantidad de peticiones que puedo enviar, 1 son los minutos 
 
-Route::get('/dashboard', function() {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [BudgetController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 //El middleware verified solo permite ver a los usuarios la ruta una vez hayan verificado su cuenta
+
