@@ -39,6 +39,10 @@ Route::post('/email/verification-notification', function(Request $request) {
 })->middleware(['auth', 'throttle:2,1'])->name('verification.name');
 //El middleware throttle actúa como rate limit, 2 es la cantidad de peticiones que puedo enviar, 1 son los minutos 
 
-Route::get('/dashboard', [BudgetController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-//El middleware verified solo permite ver a los usuarios la ruta una vez hayan verificado su cuenta
+//Agrupar Rutas y Atributos de Middleware. El middleware verified solo permite ver a los usuarios la ruta una vez hayan verificado su cuenta
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function() {
+    Route::get('/', [BudgetController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/budgets/create', [BudgetController::class, 'create'])->middleware(['auth', 'verified'])->name('budgets.create');
+    Route::post('/budgets/store', [BudgetController::class, 'store'])->middleware(['auth', 'verified'])->name('budgets.store');
+});
 
