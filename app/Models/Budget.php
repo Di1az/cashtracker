@@ -4,9 +4,13 @@ namespace App\Models;
 
 use App\BudgetType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Budget extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = ['name', 'amount', 'type', 'user_id'];
 
     //Convertir el enum a string para poder compararlos e imprimirlos
