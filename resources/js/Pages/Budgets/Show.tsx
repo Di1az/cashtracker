@@ -1,16 +1,31 @@
 import AmountDisplay from "@/Components/AmountDisplay";
 import ExpenseModal from "@/Components/ExpenseModal";
+import { ToastContainer, toast } from "react-toastify";
 import { useExpenseModalStore } from "@/stores/expense-modal-store";
 import { Budget } from "@/types/budget";
-import { Head } from "@inertiajs/react";
+import { Category } from "@/types/category";
+import { Head, usePage } from "@inertiajs/react";
+import { use, useEffect } from "react";
 
 type Props = {
     budget: Budget
+    categories: Category[]
 }
 
-export default function Show({budget} : Props) {
+export default function Show({budget, categories} : Props) {
+
+    //recuperamos los props del middleware de inertia usando el hook usePage
+    const { flash } = usePage().props 
 
     const openCreateModal = useExpenseModalStore((state) => state.openCreateModal)
+    useExpenseModalStore.getState().setBudget(budget)
+    useExpenseModalStore.getState().setCategories(categories)
+
+    useEffect(() => {
+        if(flash.success) {
+            toast.success(flash.success) 
+        }
+    }, [flash])
 
     return (
         <>
@@ -51,6 +66,7 @@ export default function Show({budget} : Props) {
 
 
             <ExpenseModal />
+            <ToastContainer />
         </>
     )
 }

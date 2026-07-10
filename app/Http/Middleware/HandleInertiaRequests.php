@@ -37,7 +37,9 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            //
+            'flash' => [ //Recuperamos la sesión del servidor y la hace disponible en las páginas de inertia
+                'success' => fn () => $request->session()->get('success') 
+            ],
         ];
     }
 }
